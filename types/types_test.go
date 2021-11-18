@@ -121,12 +121,12 @@ func TestIsValidAddressByte(t *testing.T) {
 func TestBloom_MarshalTo(t *testing.T) {
 	bloom0 := Bloom{0, 1, 1}
 
-	data, err := bloom0.MarshalJSON()
+	data, err := bloom0.MarshalText()
 	require.Nil(t, err)
 
 	var bloom1 Bloom
 
-	err = bloom1.UnmarshalJSON(data)
+	err = bloom1.UnmarshalText(data)
 	require.Nil(t, err)
 
 	require.Equal(t, bloom0, bloom1)

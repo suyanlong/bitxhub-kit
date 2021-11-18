@@ -119,7 +119,7 @@ func (priv *PrivateKey) Type() crypto.KeyType {
 	return priv.curve
 }
 
-func UnmarshalPrivateKey(data []byte, opt crypto.KeyType) (*PrivateKey, error) {
+func UnmarshalPrivateKey(data []byte, opt crypto.KeyType) (crypto.PrivateKey, error) {
 	if len(data) == 0 {
 		return nil, fmt.Errorf("empty private key data")
 	}
