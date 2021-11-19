@@ -67,17 +67,27 @@ type Crypto struct {
 }
 
 func RegisterCrypto(typ crypto.KeyType, f CryptoConstructor, g CryptoVerify, k CryptoUnmarshalPrivateKey) {
-	CryptoM[typ].Constructor = f
-	CryptoM[typ].Verify = g
-	CryptoM[typ].UnmarshalPrivateKey = k
+	if _, ok := CryptoM[typ]; !ok {
+		CryptoM[typ] = &Crypto{
+			KeyType:             typ,
+			Name:                "",
+			Constructor:         f,
+			Verify:              g,
+			UnmarshalPrivateKey: k,
+		}
+	}
 }
 
 func RegisterCrypto1(typ crypto.KeyType, name string, f CryptoConstructor, g CryptoVerify, k CryptoUnmarshalPrivateKey) {
-	CryptoM[typ].Constructor = f
-	CryptoM[typ].Verify = g
-	CryptoM[typ].UnmarshalPrivateKey = k
-	CryptoM[typ].Name = name
-	CryptoM[typ].KeyType = typ
+	if _, ok := CryptoM[typ]; !ok {
+		CryptoM[typ] = &Crypto{
+			KeyType:             typ,
+			Name:                name,
+			Constructor:         f,
+			Verify:              g,
+			UnmarshalPrivateKey: k,
+		}
+	}
 }
 
 func GetCrypto(typ crypto.KeyType) (*Crypto, error) {
